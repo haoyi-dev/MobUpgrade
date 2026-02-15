@@ -1,8 +1,44 @@
 name: MobUpgrade
-version: '1.0-SNAPSHOT'
+version: ${project.version}
 main: org.haoyi.mobUpgrade.MobUpgrade
 api-version: '1.20'
 load: STARTUP
-authors: [ Haoyi-dev, Duyn Hai ]
-description: Plugin nay se nang cap nhung loai quai trong server
+authors: [ Haoyi-dev ]
+description: May Con Ga
 website: haoyi.dev
+folia-supported: true
+
+softdepend:
+  - DecentHolograms
+  - FancyHolograms
+  - Holographics
+  - Oraxen
+  - ItemsAdder
+  - Nexo
+
+commands:
+  mobupgrade:
+    description: Main MobUpgrade command
+    usage: /mobupgrade <reload|spawn|list|info|customdrop>
+    aliases: [ mu, mobup ]
+  mutant:
+    description: Spawn a mutant mob (admin)
+    usage: /mutant spawn <type> [day] [world]
+    aliases: [ mut ]
+
+permissions:
+  mobupgrade.admin:
+    description: Access to admin commands and spawn
+    default: op
+  mobupgrade.reload:
+    description: Reload config and lang
+    default: op
+  mobupgrade.spawn:
+    description: Spawn mutant mobs
+    default: op
+  mobupgrade.use:
+    description: Use basic commands
+    default: true
+  mobupgrade.customdrop:
+    description: Add/list/remove custom drops by command
+    default: op

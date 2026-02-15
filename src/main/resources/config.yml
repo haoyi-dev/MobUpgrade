@@ -1,0 +1,186 @@
+# Plugin by Haoyi-dev
+# Config version 1.0 - BETA
+# Support Paper 1.20 - 1.21.11
+
+language: vn
+
+# === SCALING ===
+scaling:
+  hp-per-day: 0.5
+  damage-per-day: 0.3
+  max-day-cap: 100
+  # minecraft_day = dùng default-spawn-day / spawn-day-min-max (config bên dưới)
+  # real_world = day tính theo thời gian thực ngoài đời (1 ngày thật = 1 day scaling)
+  time-mode: real_world
+
+# Thời gian thực (khi time-mode: real_world)
+real-world:
+  # Mốc thời gian (millis). 0 = lần đầu enable plugin sẽ lưu "bây giờ" vào data.yml
+  start-timestamp-millis: 0
+  # 1 ngày thật = bao nhiêu "day" scaling (1 = mỗi 24h thật tăng 1 day)
+  days-per-real-day: 1
+  # Cứ mỗi N tick cập nhật lại day của quái hiện có theo thời gian thực (0 = tắt)
+  upgrade-existing-interval-ticks: 72000
+
+# === HOLOGRAM (tắt hoặc giảm cập nhật để tiết kiệm) ===
+hologram:
+  enabled: true
+  height-above: 0.8
+  bar-length: 10
+  bar-char-filled: "|"
+  bar-char-empty: " "
+  show-name: true
+  show-day: true
+  # Chỉ cập nhật bar mỗi X tick (20 = 1 giây) - giảm lag khi nhiều quái bị đánh
+  update-interval-ticks: 20
+  # Chỉ hiện hologram khi có người chơi trong bán kính (0 = luôn hiện)
+  max-view-distance: 0
+
+# === SPAWN (giới hạn để tránh quá tải) ===
+spawn:
+  enabled: true
+  interval-ticks: 6000
+  per-chunk-attempts: 2
+  # Số lần spawn tối đa mỗi lần chạy task (tổng toàn server)
+  max-spawns-per-run: 5
+  # Tối đa mutant trong 1 world (0 = không giới hạn)
+  max-mutants-per-world: 80
+  # Tối đa mutant trong 1 chunk (0 = không giới hạn)
+  max-mutants-per-chunk: 2
+  # Chỉ spawn khi có người trong bán kính (block)
+  min-player-distance: 24
+  # Bật để TOÀN BỘ mob trong MC đều được nâng cấp (trừ spawn ở The End nếu exclude-the-end: true)
+  all-mobs: false
+  # Chỉ quái (hostile) được nâng cấp (bỏ qua nếu all-mobs: true)
+  all-hostile-mobs: false
+  # Bật để mob hiền lành (cow, pig, sheep...) cũng được nâng cấp và có thể đánh trả
+  include-passive-mobs: false
+  # Loại trừ thế giới The End (không spawn mutant ở the_end)
+  exclude-the-end: true
+  # Random spawn theo world (trọng số, càng cao càng dễ spawn). Bỏ trống = tỷ lệ đều
+  world-weights:
+    world: 1
+    world_nether: 1
+    world_the_end: 0
+  worlds:
+    - world
+    - world_nether
+#    - world_the_end
+  mob-types:
+    - ZOMBIE
+    - HUSK
+    - DROWNED
+    - SKELETON
+    - STRAY
+    - BOGGED
+    - CREEPER
+    - SPIDER
+    - CAVE_SPIDER
+    - ENDERMAN
+    - WITCH
+    - SLIME
+    - MAGMA_CUBE
+    - PHANTOM
+    - PILLAGER
+    - VINDICATOR
+    - EVOKER
+    - VEX
+    - RAVAGER
+    - PIGLIN_BRUTE
+    - BLAZE
+    - GHAST
+    - WITHER_SKELETON
+    - GUARDIAN
+    - ELDER_GUARDIAN
+    - SHULKER
+    - SILVERFISH
+    - ENDERMITE
+    - HOGLIN
+    - ZOGLIN
+
+# Ngày cho quái spawn tự nhiên: dùng 1 giá trị cố định HOặc random trong khoảng
+default-spawn-day: 1
+# Nếu bật custom day: spawn random day từ day-min đến day-max (bỏ qua default-spawn-day)
+spawn-day-custom-enabled: false
+spawn-day-min: 1
+spawn-day-max: 10
+name-format: "&c&l[MUTANT] &f{name} &7(Day {day})"
+
+# === CUSTOM MODEL (ItemAdder / Oraxen / Nexo - hình dị, lạ mắt) ===
+# Gắn item lên đầu quái (custom model từ resource pack), không phải vũ khí
+custom-model:
+  enabled: false
+  slot: head   # head = đội đầu (khuyến nghị để trông dị/lạ)
+  # Danh sách item. Random 1 cái mỗi khi spawn mutant.
+  # Định dạng:
+  #   - "MATERIAL:CUSTOM_MODEL_DATA"  VD: PLAYER_HEAD:10001 (vanilla + resource pack)
+  #   - "oraxen:id"                   VD: oraxen:custom_head (cần cài Oraxen)
+  #   - "itemadder:id"                VD: itemadder:custom_item (cần cài ItemsAdder)
+  #   - "nexo:id"                     VD: nexo:item_id (cần cài Nexo)
+  items: []
+  # Có cho rơi item trên đầu khi quái chết không
+  drop-on-death: false
+
+# === CUSTOM DROPS (vật phẩm rơi thêm khi giết mutant) - chỉnh hết trong file này ===
+# Bật enabled: true rồi thêm/sửa từng mục trong items. Mỗi mục gồm:
+#   material: tên item (VD: DIAMOND, EMERALD, GOLD_INGOT, NETHERITE_SCRAP, BLAZE_ROD...)
+#   chance: tỷ lệ rơi 0.0 ~ 1.0 (0.1 = 10%)
+#   min-amount / max-amount: số lượng rơi (random trong khoảng)
+#   min-day: chỉ rơi khi mutant có day >= giá trị này (0 = luôn có thể rơi)
+# Thêm bao nhiêu dòng cũng được, copy khối "- material: ..." để tạo drop mới.
+custom-drops:
+  enabled: false
+  items:
+    - material: DIAMOND
+      chance: 0.05
+      min-amount: 1
+      max-amount: 2
+      min-day: 10
+    - material: EMERALD
+      chance: 0.1
+      min-amount: 1
+      max-amount: 1
+      min-day: 0
+    - material: GOLD_INGOT
+      chance: 0.15
+      min-amount: 1
+      max-amount: 3
+      min-day: 5
+    # - material: NETHERITE_SCRAP
+    #   chance: 0.02
+    #   min-amount: 1
+    #   max-amount: 1
+    #   min-day: 50
+
+# === CUSTOM COMMANDS (chạy lệnh khi có người giết mutant) ===
+# Lệnh chạy dưới quyền console. Placeholder: <player> <day> <mob> <world> <x> <y> <z>
+# VD: give <player> diamond 1 | say <player> đã hạ mutant day <day>
+custom-commands:
+  enabled: false
+  commands: []
+  # - "give <player> diamond 1"
+  # - "say <player> killed mutant <mob> day <day> in <world>"
+
+# === MOB HIỀN LÀNH ĐÁNH TRẢ (khi bật include-passive-mobs) ===
+passive-revenge:
+  enabled: true
+  damage-per-day: 0.2
+  range-blocks: 4
+  interval-ticks: 20
+  duration-ticks: 200
+
+# === TÍNH NĂNG BỔ SUNG ===
+features:
+  # Nhân loot khi giết mutant: multiplier = 1 + (day * loot-bonus-per-day)
+  loot-multiplier-enabled: true
+  loot-bonus-per-day: 0.02
+  loot-max-multiplier: 3.0
+  # Hiệu ứng khi mutant spawn/chết
+  spawn-effect: true
+  death-effect: true
+  # Broadcast khi có người giết mutant day cao (0 = tắt)
+  reward-broadcast-day-threshold: 50
+  # XP nhân theo day khi giết mutant
+  xp-multiplier-enabled: true
+  xp-bonus-per-day: 0.01
+  xp-max-multiplier: 2.0
