@@ -2,7 +2,7 @@
 
 Plugin Minecraft (Paper) cho phép quái **đột biến** với HP và sát thương tăng theo **Day**, có **hotbar/hologram** trên đầu, spawn khắp world, hỗ trợ **custom model** (ItemAdder, Oraxen, Nexo) để quái trông dị/lạ mắt.
 
-- **Tác giả:** Haoyi-dev, Duyn Hai  
+- **Tác giả:** Haoyi-dev
 - **Website:** haoyi.dev  
 - **Hỗ trợ:** Paper 1.20 → 1.21.11  
 - **Java:** 21  
