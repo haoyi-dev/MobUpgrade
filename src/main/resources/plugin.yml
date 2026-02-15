@@ -1,0 +1,8 @@
+name: MobUpgrade
+version: '1.0-SNAPSHOT'
+main: org.haoyi.mobUpgrade.MobUpgrade
+api-version: '1.20'
+load: STARTUP
+authors: [ Haoyi-dev, Duyn Hai ]
+description: Plugin nay se nang cap nhung loai quai trong server
+website: haoyi.dev
